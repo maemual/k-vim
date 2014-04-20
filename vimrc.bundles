@@ -59,14 +59,14 @@ let g:ycm_key_invoke_completion = '<C-Space>'
 
 
 " 代码片段快速插入
-Bundle 'SirVer/ultisnips'
+"Bundle 'SirVer/ultisnips'
 " 代码片段资源,需要学习
 " Snippets are separated from the engine. Add this if you want them:
-Bundle 'honza/vim-snippets'
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
+"Bundle 'honza/vim-snippets'
+"let g:UltiSnipsExpandTrigger = "<tab>"
+"let g:UltiSnipsJumpForwardTrigger = "<tab>"
 " 定义存放代码片段的文件夹 .vim/additional_snippets下，使用自定义和默认的，将会的到全局，有冲突的会提示
-let g:UltiSnipsSnippetDirectories=["additional_snippets", 'UltiSnips']
+"let g:UltiSnipsSnippetDirectories=["additional_snippets", 'UltiSnips']
 
 
 " 自动补全单引号，双引号等
@@ -95,9 +95,9 @@ map <leader><space> :FixWhitespace<cr>
 "################### 快速移动 ###################
 
 "更高效的移动 [,, + w/fx]
-Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'Lokaltog/vim-easymotion'
 
-Bundle 'vim-scripts/matchit.zip'
+"Bundle 'vim-scripts/matchit.zip'
 
 " 显示marks 还有bug
 " m[a-zA-Z] add mark
@@ -109,9 +109,9 @@ Bundle 'vim-scripts/matchit.zip'
 "################### 快速选中 ###################
 
 " 选中区块
-Bundle 'terryma/vim-expand-region'
-map = <Plug>(expand_region_expand)
-map - <Plug>(expand_region_shrink)
+"Bundle 'terryma/vim-expand-region'
+"map = <Plug>(expand_region_expand)
+"map - <Plug>(expand_region_shrink)
 
 " 多光标选中编辑
 Bundle 'terryma/vim-multiple-cursors'
@@ -320,7 +320,7 @@ let python_highlight_all = 1
 "###### Golang #########
 " 1.install golang and install gocode 'go get github.com/nsf/gocode'
 " 2.make sure gocode in your path: `which gocode` (add $GOPATH/bin to you $PATH)
-Bundle 'Blackrush/vim-gocode'
+"Bundle 'Blackrush/vim-gocode'
 
 "###### Markdown #########
 Bundle 'plasticboy/vim-markdown'
@@ -329,20 +329,20 @@ let g:vim_markdown_folding_disabled=1
 "###### HTML/JS/JQUERY/CSS #########
 
 " for javascript
-Bundle "pangloss/vim-javascript"
-let g:html_indent_inctags = "html,body,head,tbody"
-let g:html_indent_script1 = "inc"
-let g:html_indent_style1 = "inc"
+"Bundle "pangloss/vim-javascript"
+"let g:html_indent_inctags = "html,body,head,tbody"
+"let g:html_indent_script1 = "inc"
+"let g:html_indent_style1 = "inc"
 
 "for jquery
-Bundle 'nono/jquery.vim'
+"Bundle 'nono/jquery.vim'
 
 "###### Jinja2 #########
-Bundle 'Glench/Vim-Jinja2-Syntax'
+"Bundle 'Glench/Vim-Jinja2-Syntax'
 
 
 "###### nginx #########
-"Bundle 'evanmiller/nginx-vim-syntax'
+Bundle 'evanmiller/nginx-vim-syntax'
 
 
 "------------------------------------------- end of configs --------------------------------------------
