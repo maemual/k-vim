@@ -3,7 +3,7 @@ k-vim
 
 > VERSION: 7.0
 
-> LAST_UPDATE_TIME: 2014-03-15
+> LAST_UPDATE_TIME: 2014-05-08
 
 > PS: 年前答应的版本梳理完毕,拖延了，额，一个月....-_-#
 
@@ -12,12 +12,13 @@ k-vim
 
 # 目标
 
-> Just a Better Vim Config.
+> Just a Better Vim Config. Keep it Simple.
 
     1.结构及配置划分良好
     2.全中文注释
     3.高度可配置修改
     4.一键安装少折腾
+    5.保持简单
 
 适用人群：
 
@@ -28,6 +29,8 @@ k-vim
 推荐: 耗子叔的 [简明vim练级攻略](http://coolshell.cn/articles/5426.html)
 
 或者,玩游戏 [vim大冒险](http://vim-adventures.com/)
+
+交互教程 入门[openvim](http://www.openvim.com/tutorial.html) 进阶[Vim Genius](http://www.vimgenius.com/)
 
 学习步骤:
 
@@ -136,6 +139,22 @@ molokai主题
         sudo pip install pyflakes
         sudo pip install pylint
         sudo pip install pep8
+
+        #使用javascript需要安装jshint和jslint,用于javascript语法检查
+        需要nodejs支持,各个系统安装见文档 https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
+
+        #ubuntu
+        sudo apt-get install nodejs
+        sudo npm install -g jslint
+        sudo npm install jshint -g
+
+        #mac
+        brew install node
+        npm install jshint -g
+        npm install jslint -g
+
+
+
 
 3. 安装插件
 
@@ -272,6 +291,9 @@ molokai主题
     <space> 空格，进入搜索状态
     /       同上
     ,/      去除匹配高亮
+    (交换了#/* 号键功能)
+    #       正向查找光标下的词
+    *       反向查找光标下的词
 
     6. buffer/tab相关
     <- / -> 前后buffer
@@ -287,8 +309,7 @@ molokai主题
     U   =Ctrl-r
     , + sa    select all,全选
     , + v     选中段落
-    kj        代替ESC
-    kj        <Esc>，不用到角落去按esc了
+    kj        代替<Esc>，不用到角落去按esc了
     t         新起一行，下面，不进入插入模式
     T         新起一行，上面
     , + q     :q，退出vim
@@ -301,6 +322,7 @@ molokai主题
     4. 命令行模式 ctrl+a/e 到开始结尾
     5. <和> 代码缩进后自动再次选中
     6. 对py文件，保存自动去行尾空白，打开自动加行首代码
+    7. 交换#/*号功能,#号为正向查找,*反向
 
 
 ---------------------------------
@@ -380,8 +402,10 @@ molokai主题
 
     ![delimitmate](https://github.com/wklken/gallery/blob/master/vim/delimate.gif?raw=true)
 
+    附:同类插件 [kana/vim-smartinput](https://github.com/kana/vim-smartinput)
 
-5. ####html/xml标签配对补全 [docunext/closetag.vim]()
+
+5. ####html/xml标签配对补全 [docunext/closetag.vim](https://github.com/docunext/closetag.vim)
 
 
 > 快速编码
@@ -397,6 +421,9 @@ molokai主题
     演示
 
     ![nerdcommenter](https://github.com/wklken/gallery/blob/master/vim/nerdcomment.gif?raw=true)
+
+
+    附:注释还有其他两种插件可选[tcomment](https://github.com/tomtom/tcomment_vim) 和[tpope/vim-commentary](https://github.com/tpope/vim-commentary)
 
 
 3. ####快速编辑 [tpope/vim-surround](https://github.com/tpope/vim-surround) +[tpope/vim-repeat](https://github.com/tpope/vim-repeat)
@@ -423,6 +450,14 @@ molokai主题
     将代码行最后无效的空格标红
 
         [sd] ,空格    去掉当前行末尾空格
+
+4. ####赋值语句代码对齐 [godlygeek/tabular](https://github.com/godlygeek/tabular)
+
+    将代码,或者json等,进行对齐,具体见 [tabular-vim](http://vimcasts.org/episodes/aligning-text-with-tabular-vim/)
+
+        [sd]  可以选中多行,不选中默认操作当前行
+            ,a= 对齐等号表达式
+            ,a: 对齐冒号表达式(json/map等)
 
 > 快速移动
 
@@ -455,8 +490,8 @@ molokai主题
     视图模式下可伸缩选中部分，用于快速选中某些块
 
         [sd]
-        = 增加选中范围(+/=按键)
-        - 减少选中范围(_/-按键)
+        + 增加选中范围(+/=按键)
+        _ 减少选中范围(_/-按键)
 
     演示（直接取链到其github图)
 
@@ -477,6 +512,42 @@ molokai主题
 
     ![multiple-cursors](https://raw.github.com/terryma/vim-multiple-cursors/master/assets/example1.gif)
 
+> 文本对象扩展
+
+1. 自定义文本对象 [kana/vim-textobj-user.git](https://github.com/kana/vim-textobj-user.git)
+
+   后面几个扩展对象的依赖
+
+   更多其他扩展,建 [wiki](https://github.com/kana/vim-textobj-user/wiki)
+
+   PS: 特希望有一个扩展支持 '' "" [] {} ()
+
+2. 行文本对象 [kana/vim-textobj-line](https://github.com/kana/vim-textobj-line)
+
+   增加文本对象: l
+
+        dal
+        yal
+        cil
+
+3. 缩进文本对象 [kana/vim-textobj-indent.git](https://github.com/kana/vim-textobj-indent.git)
+
+   增加文本对象: i
+
+   相同缩进属于同一块,对python很有用
+
+        dai
+        yai
+        cii
+
+4. 文件文本对象 [kana/vim-textobj-entire.git](https://github.com/kana/vim-textobj-entire.git)
+
+   增加文本对象: e
+
+        dae
+        yae
+        cie
+
 > 功能相关
 
 1. ####搜索 [kien/ctrlp.vim](https://github.com/kien/ctrlp.vim)
@@ -487,16 +558,42 @@ molokai主题
         [sd] ,f  相当于mru功能，show recently opened files
 
         ctrl + j/k 进行上下移动
+        ctrl + x/v 分屏打开该文件
+        ctrl + t   在新tab中打开该文件
 
     演示
 
     ![ctrip](https://github.com/wklken/gallery/blob/master/vim/ctrlp.gif?raw=true)
 
-2. ####git [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
+    插件:
+    当前文件快速函数搜索:[tacahiroy/ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
 
-    git插件
+    解决问题:使用tagbar当函数比较多的时候,移动耗时较长,使用快速搜索快很多
+
+        ,fu   进入当前文件函数搜索
+        ,fU   搜索光标下单词对应函数
+
+
+
+2. ####git 常用操作 [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
+
+    git插件, 编辑文件时进行一些diff操作,例如diff
 
     不是很习惯,所以用的次数太少,目前和现有配置快捷键有冲突,尚未解决
+
+        [sd]
+        ,ge   = git diff edit[gd被ycm占用了]
+
+    没有配置其他快捷键,可以参照github,自己增加修改映射
+
+2. ####git状态 [airblade/vim-gitgutter](https://github.com/airblade/vim-gitgutter)
+
+    git,在同一个文件内,通过标记和高亮,显示本次文件变更点
+
+        [sd]
+        ,gs   = show diff status [gd被ycm占用了]
+
+    ![gitgutter](https://raw.githubusercontent.com/airblade/vim-gitgutter/master/screenshot.png)
 
 3. ####文件时光机 [sjl/gundo.vim](https://github.com/sjl/gundo.vim)
 
@@ -504,14 +601,18 @@ molokai主题
 
         [sd] ,h  查看文件编辑历史
 
+    附:同类插件 [mbbill/undotree](https://github.com/mbbill/undotree)
+
 > 显示增强
 
 
-1. ####状态栏增强 [Lokaltog/vim-powerline](https://github.com/Lokaltog/vim-powerline)
+1. ####状态栏增强 [bling/vim-airline](https://github.com/bling/vim-airline)
+
+    之前使用powerline, 用airline替换, powerline的配置注释,需要的自行解开
 
     演示
 
-    ![powerline](https://github.com/wklken/gallery/blob/master/vim/powerline.png?raw=true)
+    ![airline](https://raw.githubusercontent.com/wiki/bling/vim-airline/screenshots/demo.gif)
 
 2. ####括号上色高亮 [kien/rainbow_parentheses.vim](https://github.com/kien/rainbow_parentheses.vim)
 
@@ -541,16 +642,23 @@ molokai主题
             ,n  打开 关闭树形目录结构
 
             在nerdtree窗口常用操作：(小写当前，大写root)
-            x.......Close the current nodes parent收起当前目录树
-            R.......Recursively refresh the current root刷新根目录树
-            r.......Recursively refresh the current directory刷新当前目录
-            P.......Jump to the root node
-            p.......Jump to current nodes parent
-            K.......Jump up inside directories at the current tree depth  到同目录第一个节点
-            J.......Jump down inside directories at the current tree depth 最后一个节点
+            x.......收起当前目录树
+            X.......递归收起当前目录树
+            r.......刷新当前目录
+            R.......刷新根目录树
+
+            p.......跳到当前节点的父节点
+            P.......跳到root节点
+            k/j.....上下移动
+            K.......到同目录第一个节点
+            J.......最后一个节点
+
             o.......Open files, directories and bookmarks
-            i.......Open selected file in a split window上下分屏
-            s.......Open selected file in a new vsplit左右分屏
+            i.......split上下分屏
+            s.......vsplit左右分屏
+            c.......将当前目录设为根节点
+            q.......关闭
+
 
     演示
 
@@ -569,7 +677,9 @@ molokai主题
 
 2. ####Tag [majutsushi/tagbar](https://github.com/majutsushi/tagbar)
 
-    必装,标签导航,纬度和taglist不同
+    必装,标签导航,纬度和taglist不同, taglist的替代者
+
+    注意:之前版本有装taglist,决定用tagbar替代,taglist的配置注解未删除,需要的自行打开
 
          [sd] <F9> 打开
 
@@ -577,15 +687,6 @@ molokai主题
 
     ![tagbar](https://github.com/wklken/gallery/blob/master/vim/tagbar.gif?raw=true)
 
-3. ####Tag [vim-scripts/taglist.vim](https://github.com/vim-scripts/taglist.vim)
-
-    根据需要安装,需要安装依赖ctags
-
-         [sd] <F8>打开
-
-    演示:
-
-    ![taglist](https://github.com/wklken/gallery/blob/master/vim/taglist.png?raw=true)
 
 > 语言相关- 需要自定义编辑确认是否保留(默认打开)
 
@@ -607,7 +708,14 @@ molokai主题
 
 2. ####Golang
 
-    Go语言自动补全[Blackrush/vim-gocode]()
+    Go语言自动补全[Blackrush/vim-gocode](https://github.com/Blackrush/vim-gocode)
+
+    安装gocode之后 ,配置这个插件
+
+        `which gocode` (add $GOPATH/bin to you $PATH)
+
+    另一个插件[觉得太过庞大没有使用,golang开发者可以配置试用下] [fatih/vim-go](https://github.com/fatih/vim-go) [介绍](http://blog.gopheracademy.com/vimgo-development-environment)
+
 
 3. ####Markdown
 
@@ -617,32 +725,28 @@ molokai主题
 
 4. ####HTML/JS/JQUERY/CSS
 
-    [pangloss/vim-javascript](https://github.com/pangloss/vim-javascript)
+    [pangloss/vim-javascript](https://github.com/pangloss/vim-javascript) 偶尔会看看js,频率不高
 
-    偶尔会看看js,频率不高
+    [marijnh/tern_for_vim](https://github.com/marijnh/tern_for_vim) 配合ycm进行js/jquery自动补全,需要安装 tern_for_vim 并
+    配置文档  [ternjs](http://ternjs.net/)
 
-    [nono/jquery.vim](https://github.com/nono/jquery.vim)
 
-    jquery高亮
+        cd ~/.vim/bundle/tern_for_vim && npm install
 
-    [elzr/vim-json](https://github.com/elzr/vim-json)
+    [maksimr/vim-jsbeautify](https://github.com/maksimr/vim-jsbeautify)  js/html/css 格式化, 未配置
 
-    json高亮,未配置
+    [nono/jquery.vim](https://github.com/nono/jquery.vim) jquery高亮
 
-    [kchmck/vim-coffee-script](https://github.com/kchmck/vim-coffee-script)
+    [elzr/vim-json](https://github.com/elzr/vim-json) json高亮,未配置
 
-    coffeescript,未配置
+    [kchmck/vim-coffee-script](https://github.com/kchmck/vim-coffee-script) coffeescript,未配置
 
-    [groenewege/vim-less](https://github.com/groenewege/vim-less)
+    [groenewege/vim-less](https://github.com/groenewege/vim-less) less,未配置
 
-    less,未配置
+    [emmet](https://github.com/mattn/emmet-vim) zencoding,未配置
 
-    [emmet](https://github.com/mattn/emmet-vim)
-
-    zencoding,未配置
-
-    [gorodinskiy/vim-coloresque](https://github.com/gorodinskiy/vim-coloresque)
-
+    [gorodinskiy/vim-coloresque](https://github.com/gorodinskiy/vim-coloresque) 配置 |
+    [vim-css-color](https://github.com/ap/vim-css-color) 未配置
     css颜色展示
 
 5. ####Jinja2
@@ -653,43 +757,52 @@ molokai主题
 
 6. ####Ruby
 
-    [tpope/vim-rails](https://github.com/tpope/vim-rails)
-    未配置
+    可以参考tpope的插件列表,很多跟ruby相关
+
+    [tpope/vim-rails](https://github.com/tpope/vim-rails) 未配置
+    [tpope/vim-endwise](https://github.com/tpope/vim-endwise) 未配置,自动加end
 
 7. ####PHP
 
-    [spf13/PIV](https://github.com/spf13/PIV)
-    未配置
+    [spf13/PIV](https://github.com/spf13/PIV) 未配置
 
-    [arnaud-lb/vim-php-namespace](https://github.com/arnaud-lb/vim-php-namespace)
-    未配置
+    [arnaud-lb/vim-php-namespace](https://github.com/arnaud-lb/vim-php-namespace) 未配置
 
 8. ####非语言语法高亮
 
-    [evanmiller/nginx-vim-syntax](https://github.com/evanmiller/nginx-vim-syntax)
-    nginx
+    [evanmiller/nginx-vim-syntax](https://github.com/evanmiller/nginx-vim-syntax) 未配置
 
 > 其他
 
 1. ####平滑滚动
 
-    [terryma/vim-smooth-scroll](https://github.com/terryma/vim-smooth-scroll)
-    未配置
+    [yonchu/accelerated-smooth-scroll](https://github.com/yonchu/accelerated-smooth-scroll) 未配置
+
+    [terryma/vim-smooth-scroll](https://github.com/terryma/vim-smooth-scroll) 未配置
 
 2. ####多人协作，结对编程
 
-    [FredKSchott/CoVim](https://github.com/FredKSchott/CoVim)
-    未配置
+    [FredKSchott/CoVim](https://github.com/FredKSchott/CoVim) 未配置
 
 3. ####单行多行变换
 
-    [AndrewRadev/splitjoin.vim](https://github.com/AndrewRadev/splitjoin.vim)
-    未配置
+    [AndrewRadev/splitjoin.vim](https://github.com/AndrewRadev/splitjoin.vim) 未配置
 
 4. ####TODO关键字列表
 
-    [vim-scripts/TaskList.vim](https://github.com/vim-scripts/TaskList.vim)
-    未配置
+    [vim-scripts/TaskList.vim](https://github.com/vim-scripts/TaskList.vim) 未配置
+
+5. ####substitute替换增强
+
+    [tpope/vim-abolish.vim](https://github.com/tpope/vim-abolish) 未配置
+
+6. ####剪贴板复用增强
+
+    [vim-scripts/YankRing.vim](https://github.com/vim-scripts/YankRing.vim) 未配置
+
+7. ####写作模式
+
+    [junegunn/goyo.vim](https://github.com/junegunn/goyo.vim)  未配置
 
 ---------------------------------
 
@@ -697,7 +810,7 @@ molokai主题
 
 ### Update Log
 
-2014-06-11 创建:
+2013-06-11 创建:
 
     vim配置
 
@@ -709,45 +822,23 @@ molokai主题
     4.更强大的代码补全
     5.去掉一些无用信息
 
+2014-05-07/08更新:
+
+    1.增加文本对象扩展
+    2.去除taglist
+    3.增加 ctrlp插件 ctrlp-funky用于快速函数搜索跳转
+    4.切换powerline为airline
+
 TODO:
 
-    1.
-    Taglist有没有必要存在?
-
-
-    2.
-    增加一些语言类的插件配置
-
-    3.
-    代码格式化
-    https://github.com/godlygeek/tabular
-
-    4.
-    代码缩进展示-准备加入
-    https://github.com/nathanaelkane/vim-indent-guides
-
-    5.
-    非paste模式下
-    黏贴的时候，不要自动补全加括号
-
-    6.
-    比较
-    kana/vim-smartinput 和delimate
-    gundo 和 mbbill/undotree [spf13]
-    ctrlp 和 fuzzyfinder 及Shougo/unite.vim
-    powerline和'bling/vim-airline' [spf13]
-
-    7.
-    剪贴板共享-准备加入
-    https://github.com/vim-scripts/YankRing.vim
-
-    8.
-    待使用确认
-    函数参数位置调整 https://github.com/PeterRincker/vim-argumentative
-    iterm2+vim https://github.com/sjl/vitality.vim
-    shell https://github.com/vim-scripts/Conque-Shell
-    git https://github.com/airblade/vim-gitgutter
-
+    1.更便捷易用的buffer/tab/window管理切换
+    2.在 vim 中执行shell
+      https://github.com/Shougo/vimshell.vim
+      http://code.hootsuite.com/vimshell/
+      https://github.com/vim-scripts/Conque-Shell
+    3.vim compile/run/debug code[好奇而已.....目前习惯用终端]
+      https://github.com/jaredly/vim-debug/
+    4.现有插件-二八原则对具体用法仔细梳理
 
 ### Inspire
 
@@ -759,7 +850,23 @@ TODO:
 
 3. 自动补全 [YCM](https://github.com/Valloric/YouCompleteMe)
 
+### Resources
 
+0. [vim资源汇总](http://u.memect.com/vim/)
+
+1. [VimAwesome](http://vimawesome.com/)
+
+1. [Google+](https://plus.google.com/communities/105049811056605918816)
+
+2. [vimbits](http://www.vimbits.com/bits?sort=top)
+
+3. [Learning vim the hard way](http://learnvimscriptthehardway.stevelosh.com/)
+
+4. [Seven habits of effective text editing](http://www.moolenaar.net/habits.html)
+
+5. [openvim tutorial](http://www.openvim.com/tutorial.html)
+
+6. [vim genius](http://www.vimgenius.com/)
 
 ------------------------
 
