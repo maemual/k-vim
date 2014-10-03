@@ -44,7 +44,7 @@ highlight SyntasticErrorSign guifg=white guibg=black
 
 " 代码自动补全
 "迄今为止用到的最好的自动VIM自动补全插件
-"Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 "youcompleteme  默认tab  s-tab 和自动补全冲突
 "let g:ycm_key_list_select_completion=['<c-n>']
 let g:ycm_key_list_select_completion = ['<Down>']
@@ -304,6 +304,7 @@ let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
+"let g:miniBufExplorerAutoStart = 0
 "解决FileExplorer窗口变小问题
 let g:miniBufExplForceSyntaxEnable = 1
 let g:miniBufExplorerMoreThanOne=2
@@ -403,8 +404,8 @@ let python_highlight_all = 1
 "###### Golang #########
 " 1.install golang and install gocode 'go get github.com/nsf/gocode'
 " 2.make sure gocode in your path: `which gocode` (add $GOPATH/bin to you $PATH)
-Bundle 'Blackrush/vim-gocode'
-"Bundle 'fatih/vim-go.git'
+" Bundle 'Blackrush/vim-gocode'
+Bundle 'fatih/vim-go.git'
 
 "###### Markdown #########
 Bundle 'plasticboy/vim-markdown'
