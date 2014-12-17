@@ -398,8 +398,8 @@ let python_highlight_all = 1
 "###### Golang #########
 " 1.install golang and install gocode 'go get github.com/nsf/gocode'
 " 2.make sure gocode in your path: `which gocode` (add $GOPATH/bin to you $PATH)
-Bundle 'Blackrush/vim-gocode'
-"Bundle 'fatih/vim-go.git'
+"Bundle 'Blackrush/vim-gocode'
+Bundle 'fatih/vim-go.git'
 
 "###### Markdown #########
 Bundle 'plasticboy/vim-markdown'
