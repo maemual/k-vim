@@ -400,6 +400,7 @@ let python_highlight_all = 1
 " 2.make sure gocode in your path: `which gocode` (add $GOPATH/bin to you $PATH)
 "Bundle 'Blackrush/vim-gocode'
 Bundle 'fatih/vim-go.git'
+let g:go_fmt_command = "goimports"
 
 "###### Markdown #########
 Bundle 'plasticboy/vim-markdown'
