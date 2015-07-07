@@ -1,16 +1,14 @@
 k-vim
 =======================
 
-> VERSION: 8.0
+> VERSION: 9.0
 
-> LAST_UPDATE_TIME: 2014-10-02
+> LAST_UPDATE_TIME: 2015-05-02
 
-> 本次更新: 更为强大的tab操作/更全面的自动补全
+> 本次更新: 更强大的搜索, 快速运行等
 
 
 详细 [更新日志](https://github.com/wklken/k-vim/blob/master/UPDATE_LOG.md)
-
-
 
 # 目标
 
@@ -20,13 +18,13 @@ k-vim
     1. 结构划分良好, 中文注释
     2. 高度可配置修改
     3. 一键安装少折腾
-    4. 更加符合直觉的键位操作
+    4. 更加符合直觉的键位操作(*)
 
 适用人群：
 
     有一定基础的 vimer
 
-
+PS: 服务器端不带插件`k-vim`的简化版本(curl直接设置vimrc即可), 有需要可以直接安装[vim-for-server](https://github.com/wklken/vim-for-server)
 
 ### k-vim使用说明
 
@@ -51,8 +49,6 @@ k-vim
 4. google大法
 5. 提issues
 
-
-后面图片有点多，展示有点慢，截得不是很专业，耐心看完:)
 
 ---------------------------------
 
@@ -80,18 +76,24 @@ molokai主题
 
 2. 安装依赖包
 
+        # ctags, ag(the_silver_searcher)
+
         2.1 系统依赖
 
         # ubuntu
         sudo apt-get install ctags
         sudo apt-get install build-essential cmake python-dev  #编译YCM自动补全插件依赖
+        sudo apt-get install silversearcher-ag
 
         # centos
         sudo yum install python-devel.x86_64
         sudo yum groupinstall 'Development Tools'
+        sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+        sudo yum install the_silver_searcher
 
         # mac
-        #brew install ctags
+        brew install ctags
+        brew install the_silver_searcher
 
 
         2.2 使用Python
@@ -99,12 +101,12 @@ molokai主题
         sudo pip install pylint
         sudo pip install pep8
 
-        2.3 使用Javascript
+        2.3 如果使用Javascript, 不需要的跳过
         # 安装jshint和jslint,用于javascript语法检查
         # 需要nodejs支持,各个系统安装见文档 https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 
         #ubuntu
-        sudo apt-get install nodejs
+        sudo apt-get install nodejs npm
         sudo npm install -g jslint
         sudo npm install jshint -g
 
@@ -112,8 +114,6 @@ molokai主题
         brew install node
         npm install jshint -g
         npm install jslint -g
-
-
 
 
 3. 安装
@@ -132,8 +132,6 @@ molokai主题
 4. 可能遇到的问题:
 
 
-
-
     - 编译自动补全YouCompleteMe(耗时略长, 但绝对值得)
 
 
@@ -141,11 +139,9 @@ molokai主题
             ./install.sh --clang-completer
 
 
-
     有任何问题见YCM[文档](https://github.com/Valloric/YouCompleteMe)
 
     这个插件需要Vim 7.3.584,所以,如果vim版本太低,需要[编译安装](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
-
 
 
     - 相对行号
@@ -166,6 +162,7 @@ molokai主题
 
         which gotags
         which gocode
+
     - Javascript不能自动补全
     `vimrc.bundles`中`marijnh/tern_for_vim`默认没有打开, 需要打开安装插件, 需要依赖nodejs&npm, 具体见文档 [tern_for_vim](https://github.com/marijnh/tern_for_vim)
 
@@ -183,7 +180,6 @@ molokai主题
 
 
     - 其他问题: 键位/展现等存在问题, 使用`二分法`缩小范围, 排查到问题根源, 修改配置
-
 
 
 5. 安装/卸载/更新插件：
@@ -214,12 +210,18 @@ molokai主题
 
 # 自定义快捷键
 
+    注意, 以下 `,` 代表<leader>
     1. 可以自己修改vimrc中配置，决定是否开启鼠标
 
     set mouse-=a           " 鼠标暂不启用, 键盘党....
     set mouse=a            " 开启鼠标
 
-    2. 可以自己修改vimrc决定是否使用方向键进行上下左右移动，默认打开，可以注解
+    2. 退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 如果不需要可以关掉
+       好处：误删什么的，如果以前屏幕打开，可以找回....惨痛的经历
+
+    set t_ti= t_te=
+
+    3. 可以自己修改vimrc决定是否使用方向键进行上下左右移动，默认关闭，强迫自己用 hjkl，可以注解
     hjkl  上下左右
 
     map <Left> <Nop>
@@ -227,7 +229,7 @@ molokai主题
     map <Up> <Nop>
     map <Down> <Nop>
 
-    3. 上排F功能键
+    4. 上排F功能键
 
     F1 废弃这个键,防止调出系统帮助
     F2 set nu/nonu,行号开关，用于鼠标复制代码用
@@ -236,20 +238,25 @@ molokai主题
     F5 set paste/nopaste,粘贴模式paste_mode开关,用于有格式的代码粘贴
     F6 syntax on/off,语法开关，关闭语法可以加快大文件的展示
 
-    4. 分屏移动
+    F9 tagbar
+    F10 运行当前文件(quickrun)
 
-    ctrl + jkhl 进行上下左右窗口跳转,不需要ctrl+w+jkhl
+    5. 分屏移动
 
-    5. 搜索
+    ctrl + j/k/h/l   进行上下左右窗口跳转,不需要ctrl+w+jkhl
+
+    6. 搜索
     <space> 空格，进入搜索状态
     /       同上
     ,/      去除匹配高亮
 
-    (交换了#/* 号键功能)
+    (交换了#/* 号键功能, 更符合直觉, 其实是离左手更近)
     #       正向查找光标下的词
     *       反向查找光标下的词
 
-    6. tab操作(重点推)
+    优化搜索保证结果在屏幕中间
+
+    7. tab操作(重点推)
     ctrl+t 新建一个tab
 
     (hjkl)
@@ -271,33 +278,44 @@ molokai主题
     ,9     切第9个tab
     ,0     切最后一个tab
 
-    ctrl+l 最近使用两个tab之间切换
+    ,tt 最近使用两个tab之间切换
+    (可修改配置位 ctrl+o,  但是ctrl+o/i为系统光标相关快捷键, 故不采用)
+
+    8. buffer操作(不建议, 建议使用ctrlspace插件来操作)
+    [b    前一个buffer
+    ]b    后一个buffer
+    <-    前一个buffer
+    ->    后一个buffer
 
 
-    7. 按键修改
-    Y   =y$   复制到行尾
-    U   =Ctrl-r
-    , + sa    select all,全选
-    , + v     选中段落
+    9. 按键修改
+    Y         =y$   复制到行尾
+    U         =Ctrl-r
+    ,sa       select all,全选
+    ,v        选中段落
     kj        代替<Esc>，不用到角落去按esc了
 
-    , + q     :q，退出vim
+    ,q     :q，退出vim
+
+    ctrl+n    相对/绝对行号切换
+    <enter>   normal模式下回车选中当前项
 
 
-    优化:
-    1. j/k 对于换行展示移动更友好
-    2. HL 修改成 ^$, 更方便在同行移动
-    3. ; 修改成 : ，一键进入命令行模式，不需要按shift
-    4. 命令行模式 ctrl+a/e 到开始结尾
-    5. <和> 代码缩进后自动再次选中
-    6. 对py文件，保存自动去行尾空白，打开自动加行首代码
-    7. 交换#/*号功能,#号为正向查找,*反向
-    8. `w!!`强制保存, 即使readonly
 
-    废弃:
-    t         新起一行，下面，不进入插入模式
-    T         新起一行，上面
-
+    更多优化:
+        1. j/k 对于换行展示移动更友好
+        2. HL 修改成 ^$, 更方便在同行移动
+        3. ; 修改成 : ，一键进入命令行模式，不需要按shift
+        4. 命令行模式 ctrl+a/e 到开始结尾
+        5. <和> 代码缩进后自动再次选中, 方便多次缩进, esc退出
+        6. 对py文件，保存自动去行尾空白，打开自动加行首代码
+        7. 交换#/*号功能,#号为正向查找,*反向
+        8. `w!!`强制保存, 即使readonly
+        9. 去掉错误输入提示
+        10. 交换`和', '能跳转到准确行列位置
+        11. python/ruby 等, 保存时自动去行尾空白
+        12. 统一所有分屏打开的操作位v/s[nerdtree/ctrlspace] (特殊ctrlp ctrl+v/x)
+        13. `,zz`       代码折叠toggle
 
 ---------------------------------
 
@@ -322,9 +340,12 @@ molokai主题
 
     修改了下标记一列的背景色,原有的背景色在solarized下太难看了…..
 
+        ,s  列出/隐藏当前文件所有错误列表
+
     演示
 
     ![syntastic](https://github.com/wklken/gallery/blob/master/vim/syntastic.png?raw=true)
+
 
 > 自动补全
 
@@ -344,10 +365,14 @@ molokai主题
 
     快捷键:
 
+        ctrl+j 选择下一个补全
+        ctrl+k 选择上一个补全
+
         ctrl+n 选择下一个补全
         ctrl+p 选择上一个补全
         回车    选中
-        ,gd  跳到声明位置, 仅 filetypes: c, cpp, objc, objcpp, python 有效
+        ,jd  跳转到函数定义, 分屏打开一个buffer(非常有用!!!!!!!!!)
+        ,gd  跳到声明位置, 仅 filetypes: c, cpp, objc, objcpp, python 有效(比较少用)
 
     演示(官方截图)
 
@@ -361,9 +386,12 @@ molokai主题
 
     YCM 自动补全会弹提示
 
+        ctrl+j 上一个
+        ctrl+k 下一个
+
         ctrl+n 上一个
         ctrl+p 下一个
-        <tab>  使用片段
+        <tab>  使用片段 -> expand to codes
         ,us    编辑对应文件类型的代码片段
 
     演示
@@ -397,7 +425,7 @@ molokai主题
             -> ,cc      加上注释
             -> ,cu      解开注释
             -> ,c<space> 加上/解开注释
-            -> ,cy      先复制再注解, p可以黏贴未注释前的代码
+            -> ,cy      先复制再注解, p可以粘贴未注释前的代码
 
     演示
 
@@ -409,23 +437,40 @@ molokai主题
 
 3. ####快速编辑 [tpope/vim-surround](https://github.com/tpope/vim-surround) +[tpope/vim-repeat](https://github.com/tpope/vim-repeat)
 
-    必装，很给力的功能，快速给词加环绕符号,例如引号
+    必装，很给力的功能，快速给词加环绕符号,例如引号, 注意(括号, 左括号会加空格, 右括号不会)
 
-    repeat进行增强,'.'可以重复命令
+    repeat进行增强,'.'可以重复使用命令 (ys=you surround)
 
         [d]
-        cs"' [inside]
+        cs"'
         "Hello world!" -> 'Hello world!'
+
         ds"
         "Hello world!" -> Hello world!
+
         ysiw"
         Hello -> "Hello"
+
         yss"
         Hello world -> "Hello world"
+
+        cst"
+        <a>abc</a>  -> "abc"
+
+        veeS"
+        hello world -> "hello world"
+
+        ys$" 当前到行尾, 引号引住
+
+
 
     演示
 
     ![surround](https://github.com/wklken/gallery/blob/master/vim/surround.gif?raw=true)
+
+4. ####快速运行 [vim-quickrun](https://github.com/thinca/vim-quickrun)
+
+        F10或<leader>r  快速运行当前文件
 
 
 3. ####去行尾空格 [bronson/vim-trailing-whitespace](https://github.com/bronson/vim-trailing-whitespace)
@@ -454,10 +499,17 @@ molokai主题
 
     必装，效率提升杀手锏，跳转到光标后任意位置
 
+    easymothion主要用于快速查找跳转, 今天看了支持jk快速跳转(支持多字母搜索跳转不过我认为太重了)
+
     配置(我的leader键配置 let g:mapleader = ',')
 
         ,, + w  跳转
         ,, + fe  查找'e',快速跳转定位到某个字符位置
+        ,,j      快速决定移动到下面哪行(比用行号/j移动快)
+        ,,k      快速移动到上面哪行
+        ,,l      本行, 向后快速移动
+        ,,h      本行, 向前快速移动
+        ,,.      重复上一次easymotion命令
 
     演示
 
@@ -488,8 +540,8 @@ molokai主题
     视图模式下可伸缩选中部分，用于快速选中某些块
 
         [sd]
-        + 增加选中范围(+/=按键)
-        _ 减少选中范围(_/-按键)
+        v 增加选中范围
+        V 减少选中范围
 
     演示（直接取链到其github图)
 
@@ -516,7 +568,7 @@ molokai主题
 
    后面几个扩展对象的依赖
 
-   更多其他扩展,建 [wiki](https://github.com/kana/vim-textobj-user/wiki)
+   更多其他扩展,见 [wiki](https://github.com/kana/vim-textobj-user/wiki)
 
    PS: 特希望有一个扩展支持 '' "" [] {} ()
 
@@ -558,7 +610,7 @@ molokai主题
         [sd] ,f  相当于mru功能，show recently opened files
 
         ctrl + j/k 进行上下移动
-        ctrl + x/v 分屏打开该文件
+        ctrl + x/v 分屏打开该文件 [重要**]
         ctrl + t   在新tab中打开该文件
 
     演示
@@ -573,6 +625,18 @@ molokai主题
         ,fu   进入当前文件函数搜索
         ,fU   搜索光标下单词对应函数
 
+2. ####全局搜索插件(类sumlimetext) [dyng/ctrlsf.vim](https://github.com/dyng/ctrlsf.vim)
+
+    解决了重构代码时需要修改多处的问题
+
+        光标移动到单词, 按\ 进入全局搜索
+
+        进入左侧后的操作:
+
+                    回车/o, 打开
+                    t - 在tab中打开(建议)
+                    T - Like t but focus CtrlSF window instead of opened new tab.
+                    q - Quit CtrlSF window.
 
 
 2. ####git 常用操作 [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
@@ -630,6 +694,10 @@ molokai主题
 
    用sublime text2的同学应该很熟悉, 另一个主题,可选,偶尔换换味道
 
+6. ####[chriskempson/vim-tomorrow-theme](https://github.com/chriskempson/vim-tomorrow-theme)
+
+   另一款经典主题
+
 默认值提供solarized和molokai主题，其他主题需自行配置安装
 
 > 快速导航
@@ -654,11 +722,14 @@ molokai主题
             J.......最后一个节点
 
             o.......Open files, directories and bookmarks
-            i.......split上下分屏
-            s.......vsplit左右分屏
+
+            s.......split上下分屏[原来是i, 改键]
+            v.......vsplit左右分屏[原来是s, 改键]
+
             c.......将当前目录设为根节点
             q.......关闭
 
+    nerdtree配合tab非常赞, i/s 可以在右侧分屏打开
 
     演示
 
@@ -672,13 +743,20 @@ molokai主题
 
 3. ####tab/buffer导航增强 [vim-ctrlspace](https://github.com/szw/vim-ctrlspace)
 
-    必装, 多buffer/多tab, 方便的查看列表, 操作, 切换, 与nerdtree/tabs完美配合
+    必装, 多buffer/多tab, 方便的查看列表, 操作, 切换, 与nerdtree/tabs完美配合, 很强大, 目前只使用基础功能, 后续根据需要再完善
 
-    注意: 有些人的ctrl+space被占用的, 配一个leader快捷键
+    注意: 有些人的ctrl+space被占用的, 配一个leader快捷键(下面是默认配置)
+
+          let g:ctrlspace_default_mapping_key="<C-Space>"
+
+    (同时可以看看文档前面部分针对tab的快捷键)
 
           ctrl+<space> 得到当前tab的buffer列表
           j/k     上下移动
           回车     跳转到
+          v/V     vsp分屏打开, v会进入对应文件, V会保留在ctrlspace区域
+          s/S     sp分屏打开
+
           l       展示/关闭tab列表
               j/k 或 [/] 上下移动
               =   给tab命名
@@ -690,11 +768,27 @@ molokai主题
 
           esc/q   close the list
 
+    演示
+
+    ![ctrlspace](https://github.com/wklken/gallery/blob/master/vim/ctrlspace.gif?raw=true)
+
+    官方视频
+
+<p align="center">
+<a href="https://www.youtube.com/watch?v=U1hbGJm3J0g">
+<img alt="Vim-CtrlSpace 4.0 Demo"
+src="https://raw.github.com/szw/vim-ctrlspace/master/gfx/screen_small.png" />
+</a>
+</p>
+
+
 
 
 4. ####Tag [majutsushi/tagbar](https://github.com/majutsushi/tagbar)
 
     必装,标签导航,纬度和taglist不同, taglist的替代者
+
+    tagbar针对而一些语言的文档https://github.com/majutsushi/tagbar/wiki
 
     注意:之前版本有装taglist,决定用tagbar替代,taglist的配置注解未删除,需要的自行打开
 
@@ -708,6 +802,8 @@ molokai主题
 > 语言相关- 需要自定义编辑确认是否保留(默认打开)
 
 1. ####Python
+
+    Vim as a Python IDE, but much more than that!
 
     语法高亮[python-syntax](https://github.com/hdima/python-syntax)
 
@@ -776,6 +872,9 @@ molokai主题
     可以参考tpope的插件列表,很多跟ruby相关
 
     [tpope/vim-rails](https://github.com/tpope/vim-rails) 未配置
+    [nelstrom/vim-textobj-rubyblock](https://github.com/nelstrom/vim-textobj-ruby)
+
+    这个有坑, 暂未搞定
     [tpope/vim-endwise](https://github.com/tpope/vim-endwise) 未配置,自动加end
 
 7. ####PHP
@@ -795,58 +894,58 @@ molokai主题
 
 ### Update Log
 
-2014-10-02
+详细 [更新日志](https://github.com/wklken/k-vim/blob/master/UPDATE_LOG.md)
 
-version: 8.0
+version: 9.0
 
-    1. 修复YCM不能自动提示Ultisnips代码片段的问题
-       重大问题, 生产力得到再次提升:)
-       注意: 自定义snippets, 写错一个, 就会导致YCM不提示所有的snippets
+    1. 新增依赖ag(the_silver_searcher)
 
-    2. tab增强
-       2.1 新增tab操作快捷键, 详见文档
-       2.2 增加插件 `jistr/vim-nerdtree-tabs`, 所有tab使用同一个nerdtree
-       2.3 增加插件 `szw/vim-ctrlspace`, 更强大的buffer/tab操作-切换
-       由于tab增强带来的影响:
-       - 去掉了t/T新增一行的快捷键(低频操作, 后续可以考虑配置到其他键位)
+    安装 [the_silver_searcher](https://github.com/ggreer/the_silver_searcher#installing)
 
-    3. 去除`minibuffer`插件
-       配置还留着, 需要的自己解开, 但是ctrlspace其实可以完爆这个功能
+    具体见文档
 
-    4. 优化`scrooloose/nerdcommenter`配置
-       注解加空格, 以及新增键位
+    2. 引入 thinca/vim-quickrun
 
-    5. 增加插件 `kshenoy/vim-signature`
-       mark-跳转更加方便, 修复与保存自动去行尾空白功能的冲突
+        2.1 以message的方式展示, 同原先的F10行为, 按回车过掉消息
+        2.2    F10 运行 / ,r  运行
 
-    6. 对齐插件变更, 使用`junegunn/vim-easy-align` 替换掉 `godlygeek/tabular`
+    2. 引入dyng/ctrlsf.vim, 类似 sublimetext的全局搜索
 
-    7. 增加插件 `jelera/vim-javascript-syntax`
-       更丰富的javascript语法高亮
+        2.1 依赖于ag的全局搜索
+        2.2 将光标挪到单词, 快捷键\  - 进入全局搜索, 移入分屏界面, o/t/T/q操作
 
-    8. 去除插件 `gorodinskiy/vim-coloresque`
-       这货有坑, 使用频率低 see issue https://github.com/wklken/k-vim/issues/49
 
-    9. 新增自定义snippets
-       位置 ~/.vim/UltiSnips/
+    3. 代码折叠
 
-    10. 重写README
+        3.1 <leader>zz 折叠/打开所有代码toggle(本次新增配置)
+        3.2 za 当前光标所在区域折叠toggle(vim默认的)
+
+    4. syntastic语法检查
+
+        4.1 修正语法检查错误高亮, 精确到具体错误单词
+        4.2 开启python的pep8, 允许忽略某些warning, vimrc.bundles: line 40
+        4.3 <leader>s  打开当前文件所有语法错误列表(新增配置)
+
+    5.  easymotion
+
+        5.1 <leader><leader>.  重复上一次easymotion命令, 更高效(新增配置)
+
+    6. 修改RainbowParentheses, 防止黑色括号出现
+
+    7. 修改vim-expand-region快捷键
+
+        7.1 v 扩增选中范围
+        7.2 V 缩小选中范围
+
+    8. 新增主题tomorrow
+
+### TODO
+
+1. 语言插件集合, 语法增强 https://github.com/sheerun/vim-polyglot
 
 ### Contributors
 
 thx a lot. 可以给我提pull request:)
-
-- [wklken](https://github.com/wklken)
-
-- [fangwentong](https://github.com/fangwentong)
-
-- [Garnel](https://github.com/Garnel)
-
-- [spacewander](https://github.com/spacewander)
-
-- [ruanyl](https://github.com/ruanyl)
-
-- [memoryboxes](https://github.com/memoryboxes)
 
 查看详情 [git-contributors](https://github.com/wklken/k-vim/graphs/contributors)
 
@@ -865,11 +964,13 @@ thx a lot. 可以给我提pull request:)
 
 ### Resources
 
-待增加blog[]
+[链接](http://www.wklken.me/posts/2014/10/03/vim-resources.html)
 
 ### Donation
 
-You can Buy me a coffee:)  [link](http://www.wklken.me/pages/donation.html)
+如果你认为对你有所帮助, You can Buy me a coffee:)
+
+![donation](https://raw.githubusercontent.com/wklken/gallery/master/donation/donation.png)
 
 ------------------------
 ------------------------
